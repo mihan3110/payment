@@ -1,0 +1,7 @@
+
+.gradle/
+.idea/
+gradle/
+*.iml
+*.md
+target/
