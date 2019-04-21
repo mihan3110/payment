@@ -7,7 +7,7 @@ import javax.persistence.Table;
 import java.sql.Timestamp;
 
 @Entity
-@Table(name="payment")
+@Table(name = "payment")
 public class Payment {
     public Payment() {
     }
@@ -33,6 +33,7 @@ public class Payment {
     private String referenceNumber;
     @Column
     private Timestamp dateStamp;
+
     @Override
     public String toString() {
         return "Payment{" +
@@ -48,7 +49,6 @@ public class Payment {
                 ", dateStamp=" + dateStamp +
                 '}';
     }
-
 
 
     public Payment(String requestId,
@@ -71,6 +71,18 @@ public class Payment {
         this.status = status;
         this.referenceNumber = referenceNumber;
         this.dateStamp = dateStamp;
+    }
+
+    public Payment(String requestId, Double amount, String currency, String operatingType, String remark, String accountNumberFrom, String accountNumberTo, String status, String referenceNumber) {
+        this.requestId = requestId;
+        this.amount = amount;
+        this.currency = currency;
+        this.operatingType = operatingType;
+        this.remark = remark;
+        this.accountNumberFrom = accountNumberFrom;
+        this.accountNumberTo = accountNumberTo;
+        this.status = status;
+        this.referenceNumber = referenceNumber;
     }
 
     public String getRequestId() {
