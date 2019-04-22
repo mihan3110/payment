@@ -12,7 +12,6 @@ import java.util.Random;
 
 public class PaymentService {
     private DbConnect dbConnect = new DbConnect();
-    private SequrityService referenceNumGen = new SequrityService();
     private Connection connection = dbConnect.getConnection();
     private SequrityService sequrityService = new SequrityService();
     private PaymentDao paymentDao = new PaymentDao();
@@ -26,17 +25,19 @@ public class PaymentService {
         for (int i = 0; i < text.length; i++) {
             text[i] = EXAMPLE.charAt(rng.nextInt(EXAMPLE.length()));
         }
-        String refNum =new String(text);
-        return refNum;
+
+        return new String(text);
     }
     private Timestamp getTimeStamp() {
 
-Timestamp timestamp=new java.sql.Timestamp(System.currentTimeMillis());
-        return timestamp;
+        return new java.sql.Timestamp(System.currentTimeMillis());
     }
 
-    public Payment getByReferenceNumber(String referenceNumber) throws SQLException {
-        return paymentDao.findByReferenceNumber(referenceNumber);
+    public Payment getByReferenceNumber(String referenceNumber)  {
+        Payment payment=paymentDao.findByReferenceNumber(referenceNumber);
+        payment.setAccountNumberFrom(sequrityService.CryptoAccountNumber(payment.getAccountNumberFrom()));
+        payment.setAccountNumberTo(sequrityService.CryptoAccountNumber(payment.getAccountNumberTo()));
+        return payment;
     }
 
     public void createPayment(String requestId,
@@ -46,7 +47,7 @@ Timestamp timestamp=new java.sql.Timestamp(System.currentTimeMillis());
                               String remark,
                               String accountNumberFrom,
                               String accountNumberTo,
-                              String status) throws SQLException {
+                              String status)  {
         Payment payment = new Payment(requestId,
                                       amount,
                                       currency,
@@ -113,10 +114,10 @@ Timestamp timestamp=new java.sql.Timestamp(System.currentTimeMillis());
 
     //Вывод всех записей, нужно будет доделать реализацию под нужды
 
-    public List<Payment> getAll() throws SQLException {
+    public List<Payment> getAll()  {
         List<Payment> paymentList = new ArrayList<>();
         String query = "SELECT  requestId, dateStamp, amount, currency, accountNumberFrom, accountNumberTo FROM payment";
-        Statement statement = null;
+        Statement statement;
         try {
             statement = connection.createStatement();
             ResultSet resultSet = statement.executeQuery(query);
@@ -193,8 +194,8 @@ Timestamp timestamp=new java.sql.Timestamp(System.currentTimeMillis());
 //    }
 
 
-    public void refund(String referenceNumber) throws SQLException {
-        Statement statement = null;
+    public void refund(String referenceNumber)  {
+        Statement statement;
 
         String query = "DELETE FROM payment WHERE referenceNumber='" + referenceNumber + "'";
 

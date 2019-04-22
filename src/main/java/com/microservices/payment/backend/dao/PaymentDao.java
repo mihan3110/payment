@@ -15,17 +15,17 @@ public class PaymentDao {
 
     public Payment findByReferenceNumber(String referenceNumber) {
 
-       Session session= HibernateSessionFactoryUtil.getSessionFactory().openSession();
+        Session session = HibernateSessionFactoryUtil.getSessionFactory().openSession();
 
         Query q = session.createQuery("from Payment where referenceNumber = :param");
-        q.setParameter("param",referenceNumber);
+        q.setParameter("param", referenceNumber);
 
         return (Payment) q.uniqueResult();
     }
 
     public void createPayment(Payment payment) {
         Session session = HibernateSessionFactoryUtil.getSessionFactory().openSession();
-        Transaction transaction= session.beginTransaction();
+        Transaction transaction = session.beginTransaction();
         session.save(payment);
         transaction.commit();
 
