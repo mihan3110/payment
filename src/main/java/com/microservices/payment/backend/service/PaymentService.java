@@ -26,7 +26,7 @@ public class PaymentService {
         for (int i = 0; i < text.length; i++) {
             text[i] = EXAMPLE.charAt(rng.nextInt(EXAMPLE.length()));
         }
-        String refNum = "'" + new String(text) + "'";
+        String refNum =new String(text);
         return refNum;
     }
     private Timestamp getTimeStamp() {

@@ -21,7 +21,7 @@ public class PaymentApplication {
 
 
 	//DbConnect d = new DbConnect();
-		p.createPayment("'qqf'",85.0, "'eur'", "'CA'", "'GOOD'", "'88fg5553535'", "'Ayfgana'", "'ood'");
+		p.createPayment("qqf",85.0, "eur", "CA", "GOOD", "88fg5553535", "Ayfgana", "ood");
 //d.refund("221jbpdxgcshj5owntg82jcsfpugbrc6");
 	//	System.out.println(d.getAll());
 

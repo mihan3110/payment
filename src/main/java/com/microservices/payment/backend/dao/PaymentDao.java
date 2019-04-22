@@ -2,6 +2,7 @@ package com.microservices.payment.backend.dao;
 
 import com.microservices.payment.backend.model.Payment;
 import com.microservices.payment.backend.util.HibernateSessionFactoryUtil;
+import org.hibernate.Hibernate;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.hibernate.query.Query;
@@ -16,8 +17,6 @@ public class PaymentDao {
 
        Session session= HibernateSessionFactoryUtil.getSessionFactory().openSession();
 
-//
-        System.out.println();
         Query q = session.createQuery("from Payment where referenceNumber = :param");
         q.setParameter("param",referenceNumber);
 
@@ -26,10 +25,11 @@ public class PaymentDao {
 
     public void createPayment(Payment payment) {
         Session session = HibernateSessionFactoryUtil.getSessionFactory().openSession();
-        Transaction tx1 = session.beginTransaction();
+        Transaction transaction= session.beginTransaction();
         session.save(payment);
-        tx1.commit();
-        session.close();
+        transaction.commit();
+
+
     }
 
 //    public void update(User user) {
