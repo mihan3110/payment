@@ -18,13 +18,8 @@ public class PaymentController {
     private PaymentService paymentDb;
 
     public PaymentController() {
-        try {
-            paymentDb = new PaymentService();
-            payments = paymentDb.getAll();
-        }
-        catch (SQLException e){
-            e.printStackTrace();
-        }
+        paymentDb = new PaymentService();
+        payments = paymentDb.getAll();
     }
 //    @PostMapping("/payments/new")
 //    public ResponseEntity<Object> createPayment(@RequestBody() Payment payment){
