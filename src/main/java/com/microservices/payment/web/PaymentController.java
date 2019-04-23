@@ -32,13 +32,13 @@ public class PaymentController {
 
     @PostMapping("/payments/new")
     public void createPayment(@RequestParam("requestId") String requestId,
-                                                @RequestParam("amount") Double amount,
-                                                @RequestParam("currency") String currency,
-                                                @RequestParam("operatingType") String operatingType,
-                                                @RequestParam("remark") String remark,
-                                                @RequestParam("accountNumberFrom") String accountNumberFrom,
-                                                @RequestParam("accountNumberT") String accountNumberTo,
-                                                @RequestParam("status") String status) {
+                              @RequestParam("amount") Double amount,
+                              @RequestParam("currency") String currency,
+                              @RequestParam("operatingType") String operatingType,
+                              @RequestParam("remark") String remark,
+                              @RequestParam("accountNumberFrom") String accountNumberFrom,
+                              @RequestParam("accountNumberTo") String accountNumberTo,
+                              @RequestParam("status") String status) {
 
         paymentDb.createPayment(requestId, amount, currency, operatingType, remark, accountNumberFrom, accountNumberTo, status);
     }
@@ -49,8 +49,9 @@ public class PaymentController {
     }
 
     @GetMapping("/payments/history")
-    public ResponseEntity<List<Payment>> getRestricted(@RequestParam("startDate")Timestamp startDate, @RequestParam("endDate")Timestamp endDate) throws SQLException {
-        return (ResponseEntity.ok(paymentDb.getRestricted(startDate,endDate)));
+    public ResponseEntity<List<Payment>> getRestricted(@RequestParam("startDate; format: YYYY-MM-DD HH:MM:SS") Timestamp startDate,
+                                                       @RequestParam("endDate; format: YYYY-MM-DD HH:MM:SS") Timestamp endDate) throws SQLException {
+        return (ResponseEntity.ok(paymentDb.getRestricted(startDate, endDate)));
     }
 
     @PutMapping("/payments/refund/{referenceNumber}")
