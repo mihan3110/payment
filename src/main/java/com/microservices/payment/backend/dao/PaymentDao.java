@@ -2,12 +2,16 @@ package com.microservices.payment.backend.dao;
 
 import com.microservices.payment.backend.model.Payment;
 import com.microservices.payment.backend.util.HibernateSessionFactoryUtil;
+import org.hibernate.Criteria;
 import org.hibernate.Hibernate;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
+import org.hibernate.criterion.Restrictions;
 import org.hibernate.query.Query;
+import sun.security.krb5.internal.PAData;
 
 
+import java.sql.Timestamp;
 import java.util.Iterator;
 import java.util.List;
 
@@ -31,7 +35,12 @@ public class PaymentDao {
 
 
     }
-
+public List<Payment> getRestricted(Timestamp startDate, Timestamp endDate){
+        Session session= HibernateSessionFactoryUtil.getSessionFactory().openSession();
+    Criteria criteria = session.createCriteria(Payment.class)
+            .add(Restrictions.between("dateStamp", startDate, endDate));
+            return criteria.list();
+}
 //    public void update(User user) {
 //        Session session = HibernateSessionFactoryUtil.getSessionFactory().openSession();
 //        Transaction tx1 = session.beginTransaction();

@@ -114,41 +114,42 @@ public class PaymentService {
 
     //Вывод всех записей, нужно будет доделать реализацию под нужды
 
-    public List<Payment> getAll()  {
-        List<Payment> paymentList = new ArrayList<>();
-        String query = "SELECT  requestId, dateStamp, amount, currency, accountNumberFrom, accountNumberTo FROM payment";
-        Statement statement;
-        try {
-            statement = connection.createStatement();
-            ResultSet resultSet = statement.executeQuery(query);
-
-            while (resultSet.next()) {
-                Payment payment = new Payment();
-                payment.setRequestId(resultSet.getString("requestId"));
-                payment.setAmount(resultSet.getDouble("amount"));
-                payment.setCurrency(resultSet.getString("currency"));
-                // payment.setOperatingType(resultSet.getString("operatingType"));
-                // payment.setRemark(resultSet.getString("remark"));
-                payment.setAccountNumberFrom(sequrityService.CryptoAccountNumber(resultSet.getString("accountNumberFrom")));
-                payment.setAccountNumberTo(sequrityService.CryptoAccountNumber(resultSet.getString("accountNumberTo")));
-                // payment.setStatus(resultSet.getString("status"));
-                // payment.setReferenceNumber(resultSet.getString("referenceNumber"));
-                payment.setDateStamp(resultSet.getTimestamp("dateStamp"));
-                paymentList.add(payment);
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-//        finally {
-//            if (statement != null) {
-//                statement.close();
+    public List<Payment> getRestricted(Timestamp startDate, Timestamp endDate)  {
+        return paymentDao.getRestricted(startDate,endDate);
+//        List<Payment> paymentList = new ArrayList<>();
+//        String query = "SELECT  requestId, dateStamp, amount, currency, accountNumberFrom, accountNumberTo FROM payment";
+//        Statement statement;
+//        try {
+//            statement = connection.createStatement();
+//            ResultSet resultSet = statement.executeQuery(query);
+//
+//            while (resultSet.next()) {
+//                Payment payment = new Payment();
+//                payment.setRequestId(resultSet.getString("requestId"));
+//                payment.setAmount(resultSet.getDouble("amount"));
+//                payment.setCurrency(resultSet.getString("currency"));
+//                // payment.setOperatingType(resultSet.getString("operatingType"));
+//                // payment.setRemark(resultSet.getString("remark"));
+//                payment.setAccountNumberFrom(sequrityService.CryptoAccountNumber(resultSet.getString("accountNumberFrom")));
+//                payment.setAccountNumberTo(sequrityService.CryptoAccountNumber(resultSet.getString("accountNumberTo")));
+//                // payment.setStatus(resultSet.getString("status"));
+//                // payment.setReferenceNumber(resultSet.getString("referenceNumber"));
+//                payment.setDateStamp(resultSet.getTimestamp("dateStamp"));
+//                paymentList.add(payment);
 //            }
-//            if (connection!= null) {
-//                connection.close();
-//            }
+//        } catch (SQLException e) {
+//            e.printStackTrace();
 //        }
-
-        return paymentList;
+////        finally {
+////            if (statement != null) {
+////                statement.close();
+////            }
+////            if (connection!= null) {
+////                connection.close();
+////            }
+////        }
+//
+//        return paymentList;
     }
 
 

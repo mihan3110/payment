@@ -9,6 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.sql.SQLException;
+import java.sql.Timestamp;
 import java.util.List;
 
 @RestController
@@ -19,7 +20,7 @@ public class PaymentController {
 
     public PaymentController() {
         paymentDb = new PaymentService();
-        payments = paymentDb.getAll();
+
     }
 /*
  URI location = ServletUriComponentsBuilder
@@ -48,8 +49,8 @@ public class PaymentController {
     }
 
     @GetMapping("/payments/history")
-    public ResponseEntity<List<Payment>> showAll() throws SQLException {
-        return (ResponseEntity.ok(paymentDb.getAll()));
+    public ResponseEntity<List<Payment>> getRestricted(@RequestParam("startDate")Timestamp startDate, @RequestParam("endDate")Timestamp endDate) throws SQLException {
+        return (ResponseEntity.ok(paymentDb.getRestricted(startDate,endDate)));
     }
 
     @PutMapping("/payments/refund/{referenceNumber}")
