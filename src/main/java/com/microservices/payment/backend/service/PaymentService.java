@@ -40,7 +40,7 @@ public class PaymentService {
         return payment;
     }
 
-    public Payment createPayment(String requestId,
+    public void createPayment(String requestId,
                               Double amount,
                               String currency,
                               String operatingType,
@@ -59,7 +59,7 @@ public class PaymentService {
                                       referenceNumberGenerator(),
                                       getTimeStamp());
         paymentDao.createPayment(payment);
-return payment;
+
     }
 
 

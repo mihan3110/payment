@@ -30,14 +30,14 @@ public class PaymentController {
 */
 
     @PostMapping("/payments/new")
-    public void createPayment(@PathVariable("requestId") String requestId,
-                                                @PathVariable("amount") Double amount,
-                                                @PathVariable("currency") String currency,
-                                                @PathVariable("operatingType") String operatingType,
-                                                @PathVariable("remark") String remark,
-                                                @PathVariable("accountNumberFrom") String accountNumberFrom,
-                                                @PathVariable("accountNumberT") String accountNumberTo,
-                                                @PathVariable("status") String status) {
+    public void createPayment(@RequestParam("requestId") String requestId,
+                                                @RequestParam("amount") Double amount,
+                                                @RequestParam("currency") String currency,
+                                                @RequestParam("operatingType") String operatingType,
+                                                @RequestParam("remark") String remark,
+                                                @RequestParam("accountNumberFrom") String accountNumberFrom,
+                                                @RequestParam("accountNumberT") String accountNumberTo,
+                                                @RequestParam("status") String status) {
 
         paymentDb.createPayment(requestId, amount, currency, operatingType, remark, accountNumberFrom, accountNumberTo, status);
     }

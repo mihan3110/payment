@@ -15,7 +15,7 @@ public class PaymentApplication {
 		SpringApplication.run(PaymentApplication.class, args);
 
 
-//		PaymentService p=new PaymentService();
+		PaymentService p=new PaymentService();
 //
 //		System.out.println("__________________________________\n"+p.getByReferenceNumber("nj3f48pdpb3kpkbmoh890qhpkic7grr4"));
 
