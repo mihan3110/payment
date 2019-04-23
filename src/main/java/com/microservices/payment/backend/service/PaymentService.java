@@ -40,7 +40,7 @@ public class PaymentService {
         return payment;
     }
 
-    public void createPayment(String requestId,
+    public Payment createPayment(String requestId,
                               Double amount,
                               String currency,
                               String operatingType,
@@ -59,7 +59,7 @@ public class PaymentService {
                                       referenceNumberGenerator(),
                                       getTimeStamp());
         paymentDao.createPayment(payment);
-
+return payment;
     }
 
 
@@ -195,26 +195,28 @@ public class PaymentService {
 
 
     public void refund(String referenceNumber)  {
-        Statement statement;
+    paymentDao.deleteByReferenceNumebr(referenceNumber);
 
-        String query = "DELETE FROM payment WHERE referenceNumber='" + referenceNumber + "'";
-
-        try {
-            statement = connection.createStatement();
-
-
-            statement.executeUpdate(query);
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-//        finally {
-//            if (statement != null) {
-//                statement.close();
-//            }
-//            if (connection != null) {
-//                connection.close();
-//            }
+//        Statement statement;
+//
+//        String query = "DELETE FROM payment WHERE referenceNumber='" + referenceNumber + "'";
+//
+//        try {
+//            statement = connection.createStatement();
+//
+//
+//            statement.executeUpdate(query);
+//        } catch (SQLException e) {
+//            e.printStackTrace();
 //        }
+////        finally {
+////            if (statement != null) {
+////                statement.close();
+////            }
+////            if (connection != null) {
+////                connection.close();
+////            }
+////        }
     }
 
 

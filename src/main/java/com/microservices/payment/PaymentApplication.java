@@ -12,12 +12,12 @@ import java.sql.SQLException;
 public class PaymentApplication {
 
 	public static void main(String[] args) {
-		//SpringApplication.run(PaymentApplication.class, args);
+		SpringApplication.run(PaymentApplication.class, args);
 
 
-		PaymentService p=new PaymentService();
-
-		System.out.println("__________________________________\n"+p.getByReferenceNumber("nj3f48pdpb3kpkbmoh890qhpkic7grr4"));
+//		PaymentService p=new PaymentService();
+//
+//		System.out.println("__________________________________\n"+p.getByReferenceNumber("nj3f48pdpb3kpkbmoh890qhpkic7grr4"));
 
 
 	//DbConnect d = new DbConnect();

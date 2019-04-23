@@ -40,13 +40,13 @@ public class PaymentDao {
 //        session.close();
 //    }
 //
-//    public void delete(User user) {
-//        Session session = HibernateSessionFactoryUtil.getSessionFactory().openSession();
-//        Transaction tx1 = session.beginTransaction();
-//        session.delete(user);
-//        tx1.commit();
-//        session.close();
-//    }
+    public void deleteByReferenceNumebr(String referenceNumber) {
+        Session session = HibernateSessionFactoryUtil.getSessionFactory().openSession();
+        Transaction tx1 = session.beginTransaction();
+        session.delete(findByReferenceNumber(referenceNumber));
+        tx1.commit();
+        session.close();
+    }
 //
 //    public Auto findAutoById(int id) {
 //        return HibernateSessionFactoryUtil.getSessionFactory().openSession().get(Auto.class, id);

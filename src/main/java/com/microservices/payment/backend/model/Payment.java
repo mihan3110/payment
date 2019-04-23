@@ -73,6 +73,17 @@ public class Payment {
         this.dateStamp = dateStamp;
     }
 
+    public Payment(String requestId, Double amount, String currency, String operatingType, String remark, String accountNumberFrom, String accountNumberTo, String status) {
+        this.requestId = requestId;
+        this.amount = amount;
+        this.currency = currency;
+        this.operatingType = operatingType;
+        this.remark = remark;
+        this.accountNumberFrom = accountNumberFrom;
+        this.accountNumberTo = accountNumberTo;
+        this.status = status;
+    }
+
     public Payment(String requestId, Double amount, String currency, String operatingType, String remark, String accountNumberFrom, String accountNumberTo, String status, String referenceNumber) {
         this.requestId = requestId;
         this.amount = amount;

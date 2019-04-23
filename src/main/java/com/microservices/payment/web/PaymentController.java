@@ -21,37 +21,39 @@ public class PaymentController {
         paymentDb = new PaymentService();
         payments = paymentDb.getAll();
     }
-//    @PostMapping("/payments/new")
-//    public ResponseEntity<Object> createPayment(@RequestBody() Payment payment){
-//        try {
-//            URI location = ServletUriComponentsBuilder
-//                    .fromCurrentRequest()
-//                    .path("/{requestId}")
-//                    .buildAndExpand(paymentDb.create(payment.getRequestId(),
-//                                                     payment.getAmount(),
-//                                                     payment.getCurrency(),
-//                                                     payment.getOperatingType(),
-//                                                     payment.getRemark(),
-//                                                     payment.getAccountNumberFrom(),
-//                                                     payment.getAccountNumberTo(),
-//                                                     payment.getStatus());
-//            return ResponseEntity.ok(location);
-//        } catch (Exception e) {
-//            return ResponseEntity.ok("Payment already registered");
-//        }
-//    }
+/*
+ URI location = ServletUriComponentsBuilder
+                .fromCurrentContextPath()
+                .path("/findById/{id}")
+                .buildAndExpand(savePayment.getId()).toUri();
+        return ResponseEntity.created(location).build();
+*/
+
+    @PostMapping("/payments/new")
+    public void createPayment(@PathVariable("requestId") String requestId,
+                                                @PathVariable("amount") Double amount,
+                                                @PathVariable("currency") String currency,
+                                                @PathVariable("operatingType") String operatingType,
+                                                @PathVariable("remark") String remark,
+                                                @PathVariable("accountNumberFrom") String accountNumberFrom,
+                                                @PathVariable("accountNumberT") String accountNumberTo,
+                                                @PathVariable("status") String status) {
+
+        paymentDb.createPayment(requestId, amount, currency, operatingType, remark, accountNumberFrom, accountNumberTo, status);
+    }
+
     @GetMapping("/payments/info/{referenceNumber}")
-    public ResponseEntity<Payment> findByReferenceNumber(@PathVariable("referenceNumber") String referenceNumber) throws SQLException{
-            return(ResponseEntity.ok(paymentDb.getByReferenceNumber(referenceNumber)));
+    public ResponseEntity<Payment> findByReferenceNumber(@PathVariable("referenceNumber") String referenceNumber) throws SQLException {
+        return (ResponseEntity.ok(paymentDb.getByReferenceNumber(referenceNumber)));
     }
 
     @GetMapping("/payments/history")
-    public ResponseEntity<List<Payment>> showAll() throws SQLException{
-        return(ResponseEntity.ok(paymentDb.getAll()));
+    public ResponseEntity<List<Payment>> showAll() throws SQLException {
+        return (ResponseEntity.ok(paymentDb.getAll()));
     }
 
     @PutMapping("/payments/refund/{referenceNumber}")
-    public void removeByReferenceNumber(@PathVariable("referenceNumber") String referenceNumber) throws SQLException{
+    public void removeByReferenceNumber(@PathVariable("referenceNumber") String referenceNumber) throws SQLException {
         paymentDb.refund(referenceNumber);
     }
 }
