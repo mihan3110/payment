@@ -3,52 +3,45 @@ package com.microservices.payment.backend.dao;
 import com.microservices.payment.backend.model.Payment;
 import com.microservices.payment.backend.util.HibernateSessionFactoryUtil;
 import org.hibernate.Criteria;
-import org.hibernate.Hibernate;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.hibernate.criterion.Restrictions;
 import org.hibernate.query.Query;
-import sun.security.krb5.internal.PAData;
-
 
 import java.sql.Timestamp;
-import java.util.Iterator;
 import java.util.List;
 
-public class PaymentDao {
-
+public class PaymentDao implements PaymentDb{
+    //Поиск платежа по referenceNu,ber через параметр
+    @Override
     public Payment findByReferenceNumber(String referenceNumber) {
-
         Session session = HibernateSessionFactoryUtil.getSessionFactory().openSession();
-
         Query q = session.createQuery("from Payment where referenceNumber = :param");
         q.setParameter("param", referenceNumber);
-
         return (Payment) q.uniqueResult();
     }
 
+    //Создание платежа через транзакцию
+    @Override
     public void createPayment(Payment payment) {
         Session session = HibernateSessionFactoryUtil.getSessionFactory().openSession();
         Transaction transaction = session.beginTransaction();
         session.save(payment);
         transaction.commit();
-
-
     }
-public List<Payment> getRestricted(Timestamp startDate, Timestamp endDate){
-        Session session= HibernateSessionFactoryUtil.getSessionFactory().openSession();
-    Criteria criteria = session.createCriteria(Payment.class)
-            .add(Restrictions.between("dateStamp", startDate, endDate));
-            return criteria.list();
-}
-//    public void update(User user) {
-//        Session session = HibernateSessionFactoryUtil.getSessionFactory().openSession();
-//        Transaction tx1 = session.beginTransaction();
-//        session.update(user);
-//        tx1.commit();
-//        session.close();
-//    }
-//
+
+    //Вывод истории платежей за указанный период через Criteria
+    @Override
+    public List<Payment> getRestricted(Timestamp startDate, Timestamp endDate) {
+        Session session = HibernateSessionFactoryUtil.getSessionFactory().openSession();
+        Criteria criteria = session.createCriteria(Payment.class);
+        criteria.add(Restrictions.ge("dateStamp", startDate));
+        criteria.add(Restrictions.lt("dateStamp", endDate));
+        return criteria.list();
+    }
+
+    //Удаление платежа по referenceNumber через транззакцию
+    @Override
     public void deleteByReferenceNumebr(String referenceNumber) {
         Session session = HibernateSessionFactoryUtil.getSessionFactory().openSession();
         Transaction tx1 = session.beginTransaction();
@@ -56,13 +49,5 @@ public List<Payment> getRestricted(Timestamp startDate, Timestamp endDate){
         tx1.commit();
         session.close();
     }
-//
-//    public Auto findAutoById(int id) {
-//        return HibernateSessionFactoryUtil.getSessionFactory().openSession().get(Auto.class, id);
-//    }
-//
-//    public List<User> findAll() {
-//        List<User> users = (List<User>)  HibernateSessionFactoryUtil.getSessionFactory().openSession().createQuery("From User").list();
-//        return users;
-//    }
+
 }

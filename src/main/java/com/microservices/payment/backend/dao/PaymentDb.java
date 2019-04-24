@@ -3,23 +3,20 @@ package com.microservices.payment.backend.dao;
 import com.microservices.payment.backend.model.Payment;
 
 import java.sql.SQLException;
+import java.sql.Timestamp;
 import java.util.List;
 
 public interface PaymentDb {
     //Создание платежа
-    void createPayment(String requestId,
-                Double amount,
-                String currency,
-                String operatingType,
-                String remark,
-                String accountNumberFrom,
-                String accountNumberTo,
-                String status) throws SQLException;
+    void createPayment(Payment payment) throws SQLException;
+
     //История платажей
-    List<Payment> getAll() throws SQLException;
+    List<Payment> getRestricted(Timestamp startDate, Timestamp endDate) throws SQLException;
+
     //Данные об указанном платеже
-    Payment getByReferenceNumber(String referenceNumber) throws SQLException;
+    Payment findByReferenceNumber(String referenceNumber) throws SQLException;
+
     //Отмена платежа
-    void refund (String referenceNumber) throws SQLException;
+    void deleteByReferenceNumebr(String referenceNumber) throws SQLException;
 
 }

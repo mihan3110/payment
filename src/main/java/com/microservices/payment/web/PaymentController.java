@@ -1,7 +1,5 @@
 package com.microservices.payment.web;
 
-
-import com.microservices.payment.backend.dao.DbConnect;
 import com.microservices.payment.backend.model.Payment;
 import com.microservices.payment.backend.service.PaymentService;
 import io.swagger.annotations.Api;
@@ -13,49 +11,44 @@ import java.sql.Timestamp;
 import java.util.List;
 
 @RestController
-@Api(value = "Payment", description = "a list of payments")
+@Api(value = "Payment")
 public class PaymentController {
-    private List<Payment> payments;
     private PaymentService paymentDb;
 
     public PaymentController() {
         paymentDb = new PaymentService();
 
     }
-/*
- URI location = ServletUriComponentsBuilder
-                .fromCurrentContextPath()
-                .path("/findById/{id}")
-                .buildAndExpand(savePayment.getId()).toUri();
-        return ResponseEntity.created(location).build();
-*/
 
+    //Создание нового платежа
     @PostMapping("/payments/new")
-    public void createPayment(@RequestParam("requestId") String requestId,
+    public void createPayment(@RequestHeader("requestId") String requestId,
                               @RequestParam("amount") Double amount,
                               @RequestParam("currency") String currency,
                               @RequestParam("operatingType") String operatingType,
                               @RequestParam("remark") String remark,
                               @RequestParam("accountNumberFrom") String accountNumberFrom,
-                              @RequestParam("accountNumberTo") String accountNumberTo,
-                              @RequestParam("status") String status) {
+                              @RequestParam("accountNumberTo") String accountNumberTo) {
 
-        paymentDb.createPayment(requestId, amount, currency, operatingType, remark, accountNumberFrom, accountNumberTo, status);
+        paymentDb.createPayment(requestId, amount, currency, operatingType, remark, accountNumberFrom, accountNumberTo);
     }
 
+    //Вывод информации о платеже
     @GetMapping("/payments/info/{referenceNumber}")
-    public ResponseEntity<Payment> findByReferenceNumber(@PathVariable("referenceNumber") String referenceNumber) throws SQLException {
+    public ResponseEntity<Payment> findByReferenceNumber(@PathVariable("referenceNumber") String referenceNumber) {
         return (ResponseEntity.ok(paymentDb.getByReferenceNumber(referenceNumber)));
     }
 
+    //Вывод истории платежей в указанный период
     @GetMapping("/payments/history")
-    public ResponseEntity<List<Payment>> getRestricted(@RequestParam("startDate; format: YYYY-MM-DD HH:MM:SS") Timestamp startDate,
-                                                       @RequestParam("endDate; format: YYYY-MM-DD HH:MM:SS") Timestamp endDate) throws SQLException {
+    public ResponseEntity<List<Payment>> getRestricted(@RequestParam("startDate format: YYYY-MM-DD") Timestamp startDate,
+                                                       @RequestParam("endDate format: YYYY-MM-DD") Timestamp endDate) {
         return (ResponseEntity.ok(paymentDb.getRestricted(startDate, endDate)));
     }
 
+    //Отмена платежа
     @PutMapping("/payments/refund/{referenceNumber}")
-    public void removeByReferenceNumber(@PathVariable("referenceNumber") String referenceNumber) throws SQLException {
+    public void removeByReferenceNumber(@PathVariable("referenceNumber") String referenceNumber) {
         paymentDb.refund(referenceNumber);
     }
 }

@@ -73,6 +73,18 @@ public class Payment {
         this.dateStamp = dateStamp;
     }
 
+    public Payment(String requestId, Double amount, String currency, String operatingType, String remark, String accountNumberFrom, String accountNumberTo, String referenceNumber, Timestamp dateStamp) {
+        this.requestId = requestId;
+        this.amount = amount;
+        this.currency = currency;
+        this.operatingType = operatingType;
+        this.remark = remark;
+        this.accountNumberFrom = accountNumberFrom;
+        this.accountNumberTo = accountNumberTo;
+        this.referenceNumber = referenceNumber;
+        this.dateStamp = dateStamp;
+    }
+
     public Payment(String requestId, Double amount, String currency, String operatingType, String remark, String accountNumberFrom, String accountNumberTo, String status) {
         this.requestId = requestId;
         this.amount = amount;
@@ -92,7 +104,6 @@ public class Payment {
         this.remark = remark;
         this.accountNumberFrom = accountNumberFrom;
         this.accountNumberTo = accountNumberTo;
-        this.status = status;
         this.referenceNumber = referenceNumber;
     }
 
