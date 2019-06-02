@@ -2,6 +2,9 @@ package com.microservices.payment.backend.service;
 
 import com.microservices.payment.backend.dao.PaymentDao;
 import com.microservices.payment.backend.model.Payment;
+import com.microservices.payment.backend.util.HibernateSessionFactoryUtil;
+import org.hibernate.Session;
+import org.hibernate.query.Query;
 
 import java.sql.*;
 import java.util.List;
@@ -54,7 +57,9 @@ public class PaymentService {
                 referenceNumberGenerator(),
                 getTimeStamp());
         payment.setStatus("successful");
+
         paymentDao.createPayment(payment);
+
     }
 
     //Вывод истории платежей с ограничением по времени
@@ -66,4 +71,6 @@ public class PaymentService {
     public void refund(String referenceNumber) {
         paymentDao.deleteByReferenceNumebr(referenceNumber);
     }
+
+
 }

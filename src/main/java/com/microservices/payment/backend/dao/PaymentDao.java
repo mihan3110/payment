@@ -20,6 +20,7 @@ public class PaymentDao implements PaymentDb{
         q.setParameter("param", referenceNumber);
         return (Payment) q.uniqueResult();
     }
+//Проверка на существование
 
     //Создание платежа через транзакцию
     @Override
