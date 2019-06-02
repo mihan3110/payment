@@ -19,6 +19,7 @@
 
 
         <mapping class="com.microservices.payment.backend.model.Payment"/>
+        <mapping class="com.microservices.payment.backend.model.Account"/>
 
     </session-factory>
 

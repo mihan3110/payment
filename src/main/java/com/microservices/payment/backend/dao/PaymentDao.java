@@ -8,6 +8,8 @@ import org.hibernate.Transaction;
 import org.hibernate.criterion.Restrictions;
 import org.hibernate.query.Query;
 
+
+
 import java.sql.Timestamp;
 import java.util.List;
 
@@ -20,14 +22,21 @@ public class PaymentDao implements PaymentDb{
         q.setParameter("param", referenceNumber);
         return (Payment) q.uniqueResult();
     }
-//Проверка на существование
+
 
     //Создание платежа через транзакцию
     @Override
     public void createPayment(Payment payment) {
         Session session = HibernateSessionFactoryUtil.getSessionFactory().openSession();
         Transaction transaction = session.beginTransaction();
-        session.save(payment);
+
+        Query qq=session.createQuery("from Account where accountNumber = :par or accountNumber = :parm");
+        qq.setParameter("par", payment.getAccountNumberFrom());
+        qq.setParameter("parm", payment.getAccountNumberTo());
+
+        if (qq.list().size()==2) {
+            session.save(payment);
+        }
         transaction.commit();
     }
 

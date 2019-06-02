@@ -1,5 +1,6 @@
 package com.microservices.payment.backend.util;
 
+import com.microservices.payment.backend.model.Account;
 import com.microservices.payment.backend.model.Payment;
 import org.hibernate.SessionFactory;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
@@ -17,6 +18,7 @@ public class HibernateSessionFactoryUtil {
             try {
                 Configuration configuration = new Configuration().configure();
                 configuration.addAnnotatedClass(Payment.class);
+                configuration.addAnnotatedClass(Account.class);
 
                 StandardServiceRegistryBuilder builder = new StandardServiceRegistryBuilder().applySettings(configuration.getProperties());
                 sessionFactory = configuration.buildSessionFactory(builder.build());

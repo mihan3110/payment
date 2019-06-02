@@ -19,7 +19,7 @@ public class Account {
 
 
     @Column
-    private Double amount;
+    private Double balance;
 
     public Account() {
     }
@@ -56,19 +56,19 @@ public class Account {
         this.currency = currency;
     }
 
-    public Double getAmount() {
-        return amount;
+    public Double getbalance() {
+        return balance;
     }
 
-    public void setAmount(Double amount) {
-        this.amount = amount;
+    public void setbalance(Double balance) {
+        this.balance = balance;
     }
 
-    public Account(Integer account_id, String accountNumber, String customerNumber, String currency, Double amount) {
+    public Account(Integer account_id, String accountNumber, String customerNumber, String currency, Double balance) {
         this.account_id = account_id;
         this.accountNumber = accountNumber;
         this.customerNumber = customerNumber;
         this.currency = currency;
-        this.amount = amount;
+        this.balance = balance;
     }
 }
