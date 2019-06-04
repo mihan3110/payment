@@ -39,27 +39,37 @@ public class PaymentService {
         return payment;
     }
 
+//    //Создание платежа
+//    public Payment createPayment(String requestId,
+//                              Double amount,
+//                              String currency,
+//                              String operatingType,
+//                              String remark,
+//                              String accountNumberFrom,
+//                              String accountNumberTo) {
+//        Payment payment = new Payment(requestId,
+//                amount,
+//                currency,
+//                operatingType,
+//                remark,
+//                accountNumberFrom,
+//                accountNumberTo,
+//                referenceNumberGenerator(),
+//                getTimeStamp());
+//        payment.setStatus("successful");
+//
+//        paymentDao.createPayment(payment);
+//return  payment;
+//    }
+
     //Создание платежа
-    public void createPayment(String requestId,
-                              Double amount,
-                              String currency,
-                              String operatingType,
-                              String remark,
-                              String accountNumberFrom,
-                              String accountNumberTo) {
-        Payment payment = new Payment(requestId,
-                amount,
-                currency,
-                operatingType,
-                remark,
-                accountNumberFrom,
-                accountNumberTo,
-                referenceNumberGenerator(),
-                getTimeStamp());
+    public Payment createPayment(Payment payment) {
+        payment.setReferenceNumber(referenceNumberGenerator());
+        payment.setDateStamp(getTimeStamp());
         payment.setStatus("successful");
 
         paymentDao.createPayment(payment);
-
+        return  payment;
     }
 
     //Вывод истории платежей с ограничением по времени

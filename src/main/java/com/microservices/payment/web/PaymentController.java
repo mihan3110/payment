@@ -21,17 +21,28 @@ public class PaymentController {
     }
 
     //Создание нового платежа
-    @PostMapping("/payments/new")
-    public void createPayment(@RequestHeader("requestId") String requestId,
-                              @RequestParam("amount") Double amount,
-                              @RequestParam("currency") String currency,
-                              @RequestParam("operatingType") String operatingType,
-                              @RequestParam("remark") String remark,
-                              @RequestParam("accountNumberFrom") String accountNumberFrom,
-                              @RequestParam("accountNumberTo") String accountNumberTo) {
+//    @PostMapping("/payments/new")
+//    public Payment createPayment(@RequestHeader("requestId") String requestId,
+//                              @RequestParam("amount") Double amount,
+//                              @RequestParam("currency") String currency,
+//                              @RequestParam("operatingType") String operatingType,
+//                              @RequestParam("remark") String remark,
+//                              @RequestParam("accountNumberFrom") String accountNumberFrom,
+//                              @RequestParam("accountNumberTo") String accountNumberTo) {
+//
+//        Payment payment=paymentDb.createPayment(requestId, amount, currency, operatingType, remark, accountNumberFrom, accountNumberTo);
+//        return payment;
+//    }
 
-        paymentDb.createPayment(requestId, amount, currency, operatingType, remark, accountNumberFrom, accountNumberTo);
+
+    @PostMapping("/payments/new")
+    public Payment createPayment(@RequestHeader("requestId") String requestId,
+                                 @RequestBody Payment payment) {
+
+        Payment paymentt=paymentDb.createPayment(payment);
+        return payment;
     }
+
 
     //Вывод информации о платеже
     @GetMapping("/payments/info/{referenceNumber}")
